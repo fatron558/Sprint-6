@@ -1,6 +1,7 @@
 package ru.sber.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -23,9 +24,10 @@ class SecondServiceImpl : ServiceInterface {
 }
 
 @Component
-class SeveralBeanInjectionService {
-    @Autowired
-    lateinit var services: ArrayList<ServiceInterface>
+class SeveralBeanInjectionService constructor(private val context: ApplicationContext){
+
+    var services = context.getBeanNamesForType(ServiceInterface::class.java)
+        .map { context.getBean(it) }.toList()
 
     override fun toString(): String {
         return "SeveralBeanInjectionService(services=$services)"
