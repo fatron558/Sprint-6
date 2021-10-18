@@ -19,34 +19,24 @@ class CallbackBean : InitializingBean, DisposableBean {
     }
 }
 
-class CombinedBean: MyBeanPostProcessor() {
+class CombinedBean: InitializingBean {
     var postProcessBeforeInitializationOrderMessage: String? = null
     var postConstructOrderMessage: String? = null
     var customInitOrderMessage: String? = null
     var afterPropertiesSetOrderMessage: String? = null
     var postProcessAfterInitializationOrderMessage: String? = null
 
-    @PostConstruct
-    fun afterPropertiesSet() {
+     override fun afterPropertiesSet() {
         afterPropertiesSetOrderMessage = "afterPropertiesSet() is called"
     }
-    @PostConstruct
+
     fun customInit() {
         customInitOrderMessage = "customInit() is called"
     }
+
     @PostConstruct
     fun postConstruct() {
         postConstructOrderMessage = "postConstruct() is called"
-    }
-
-    override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any? {
-        postProcessBeforeInitializationOrderMessage = "postProcessBeforeInitialization() is called"
-        return super.postProcessBeforeInitialization(bean, beanName)
-    }
-
-    override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? {
-        postProcessAfterInitializationOrderMessage = "postProcessAfterInitialization() is called"
-        return super.postProcessAfterInitialization(bean, beanName)
     }
 }
 
