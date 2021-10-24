@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All notes</title>
+</head>
+<body>
+<h2>All notes</h2>
+<br>
+
+<table cellspacing="10" cellpadding="5" border="1">
+  <tr>
+    <th>id</th>
+    <th>FirstName</th>
+    <th>LastName</th>
+    <th>Address</th>
+  </tr>
+  <tr th:each="note : ${notes}">
+    <td th:utext="${note.key}"></td>
+    <td th:utext="${note.value.firstName}"></td>
+    <td th:utext="${note.value.lastName}"></td>
+    <td th:utext="${note.value.address}"></td>
+    <td>
+      <form th:action="@{/app/{id}/view(id=${note.key})}" th:method="GET">
+        <button type="submit">View info</button>
+      </form>
+      <form th:action="@{/app/{id}/edit(id=${note.key})}" th:method="POST">
+        <button type="submit">Edit</button>
+      </form>
+      <form th:action="@{/app/{id}/delete(id=${note.key})}" th:method="DELETE">
+        <button type="submit" th:name="action">Delete</button>
+      </form>
+    </td>
+  </tr>
+</table>
+<br>
+<input type="button" value="Add new note" onclick="window.location.href='/app/add'" formmethod=""/>
+</body>
+</html>

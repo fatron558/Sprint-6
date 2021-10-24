@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add new note</title>
+</head>
+<body>
+<h2>Add new note</h2>
+<br>
+
+<form th:method="GET" th:action="@{/app/list}" th:object="${note}">
+
+  <label for="firstName">Enter FirstName: </label>
+  <input type="text" th:field="*{firstName}" id="firstName" readonly/>
+  <br/>
+  <label for="lastName">Enter LastName: </label>
+  <input type="text" th:field="*{lastName}" id="lastName" readonly/>
+  <br/>
+  <label for="address">Enter Address: </label>
+  <input type="text" th:field="*{address}" id="address" readonly/>
+  <br/>
+  <label for="phone">Enter Phone: </label>
+  <input type="text" th:field="*{phone}" id="phone" readonly/>
+  <br/><br/><br/>
+
+  <input type="submit" value="Ok"/>
+</form>
+</body>
+</html>
