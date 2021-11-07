@@ -1,12 +1,12 @@
 package com.sber.addressbook.service
 
 import com.sber.addressbook.model.Note
-import java.util.concurrent.ConcurrentMap
+import org.springframework.security.access.prepost.PreAuthorize
 
 interface AddressBookService {
-    fun add(note: Note)
-    fun getAllNotes(): ConcurrentMap<Int, Note>
-    fun getNote(id: Int): Note?
-    fun update(id: Int, note: Note)
-    fun delete(id: Int)
+    fun save(note: Note)
+    fun getAllNotes(): MutableIterable<Note>
+    fun getNote(id: Long): Note?
+    @PreAuthorize("hasRole('ADMIN')")
+    fun delete(id: Long)
 }

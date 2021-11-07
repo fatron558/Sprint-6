@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.*
 class AddressBookRestController(val addressBookService: AddressBookService) {
 
     @GetMapping("/list")
-    fun getAllNotes(): Map<Int, Note> = addressBookService.getAllNotes()
+    fun getAllNotes(): MutableIterable<Note> = addressBookService.getAllNotes()
 
     @GetMapping("/{id}/view")
-    fun getNote(@PathVariable("id") id: Int): Note? = addressBookService.getNote(id)
+    fun getNote(@PathVariable("id") id: Long): Note? = addressBookService.getNote(id)
 
     @PostMapping("/add")
-    fun addNote(@RequestBody note: Note) = addressBookService.add(note)
+    fun addNote(@RequestBody note: Note) = addressBookService.save(note)
 
     @PutMapping("/{id}/edit")
-    fun editNote(@PathVariable("id") id: Int, @RequestBody note: Note) = addressBookService.update(id, note)
+    fun editNote(@PathVariable("id") id: Long, @RequestBody note: Note) = addressBookService.save(note)
 
     @DeleteMapping("/{id}/delete")
-    fun deleteNote(@PathVariable("id") id: Int) = addressBookService.delete(id)
+    fun deleteNote(@PathVariable("id") id: Long) = addressBookService.delete(id)
 }

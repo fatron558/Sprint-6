@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 
-
 @Controller
 @RequestMapping("/app")
 class AddressBookController(val addressBookService: AddressBookService) {
@@ -27,19 +26,19 @@ class AddressBookController(val addressBookService: AddressBookService) {
     fun addNote(
         @ModelAttribute("note") note: Note,
     ): String {
-        addressBookService.add(note)
+        addressBookService.save(note)
         return "redirect:/app/list"
     }
 
     @GetMapping("/{id}/view")
-    fun getNote(@PathVariable("id") id: Int, model: Model): String {
+    fun getNote(@PathVariable("id") id: Long, model: Model): String {
         val note = addressBookService.getNote(id)
         model.addAttribute("note", note)
         return "noteInfo"
     }
 
     @PostMapping("/{id}/edit")
-    fun edit(@PathVariable("id") id: Int, model: Model): String {
+    fun edit(@PathVariable("id") id: Long, model: Model): String {
         model.addAttribute("note", addressBookService.getNote(id))
         model.addAttribute("noteId", id)
         return "edit"
@@ -47,15 +46,14 @@ class AddressBookController(val addressBookService: AddressBookService) {
 
     @PutMapping("/{id}/edit")
     fun editNote(
-        @PathVariable("id") id: Int,
-        @ModelAttribute("note") note: Note,
+        @ModelAttribute("note") note: Note
     ): String {
-        addressBookService.update(id, note)
+        addressBookService.save(note)
         return "redirect:/app/list"
     }
 
     @DeleteMapping("/{id}/delete")
-    fun delete(@PathVariable("id") id: Int): String {
+    fun delete(@PathVariable("id") id: Long): String {
         addressBookService.delete(id)
         return "redirect:/app/list"
     }

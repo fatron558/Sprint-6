@@ -16,18 +16,18 @@
     <th>Address</th>
   </tr>
   <tr th:each="note : ${notes}">
-    <td th:utext="${note.key}"></td>
-    <td th:utext="${note.value.firstName}"></td>
-    <td th:utext="${note.value.lastName}"></td>
-    <td th:utext="${note.value.address}"></td>
+    <td th:utext="${note.id}"></td>
+    <td th:utext="${note.firstName}"></td>
+    <td th:utext="${note.lastName}"></td>
+    <td th:utext="${note.address}"></td>
     <td>
-      <form th:action="@{/app/{id}/view(id=${note.key})}" th:method="GET">
+      <form th:action="@{/app/{id}/view(id=${note.id})}" th:method="GET">
         <button type="submit">View info</button>
       </form>
-      <form th:action="@{/app/{id}/edit(id=${note.key})}" th:method="POST">
+      <form th:action="@{/app/{id}/edit(id=${note.id})}" th:method="POST">
         <button type="submit">Edit</button>
       </form>
-      <form th:action="@{/app/{id}/delete(id=${note.key})}" th:method="DELETE">
+      <form th:action="@{/app/{id}/delete(id=${note.id})}" th:method="DELETE">
         <button type="submit" th:name="action">Delete</button>
       </form>
     </td>
@@ -35,5 +35,10 @@
 </table>
 <br>
 <input type="button" value="Add new note" onclick="window.location.href='/app/add'" formmethod=""/>
+<br><br><br>
+
+<form th:action="@{/logout}" method="post">
+  <button type="submit">Sign Out</button>
+</form>
 </body>
 </html>

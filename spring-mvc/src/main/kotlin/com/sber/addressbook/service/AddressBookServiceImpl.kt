@@ -1,20 +1,19 @@
 package com.sber.addressbook.service
 
-import com.sber.addressbook.dao.AddressBookDao
+import com.sber.addressbook.dao.AddressBookRepository
 import com.sber.addressbook.model.Note
 import org.springframework.stereotype.Service
-import java.util.concurrent.ConcurrentMap
 
 @Service
-class AddressBookServiceImpl(val addressBookDao: AddressBookDao) : AddressBookService {
+class AddressBookServiceImpl(val addressBookRepository: AddressBookRepository) : AddressBookService {
 
-    override fun add(note: Note) = addressBookDao.add(note)
+    override fun save(note: Note) {
+        addressBookRepository.save(note)
+    }
 
-    override fun getAllNotes(): ConcurrentMap<Int, Note> = addressBookDao.getAllNotes()
+    override fun getAllNotes(): MutableIterable<Note> = addressBookRepository.findAll()
 
-    override fun getNote(id: Int): Note? = addressBookDao.getNote(id)
+    override fun getNote(id: Long): Note? = addressBookRepository.findById(id).get()
 
-    override fun update(id: Int, note: Note) = addressBookDao.update(id, note)
-
-    override fun delete(id: Int) = addressBookDao.delete(id)
+    override fun delete(id: Long) = addressBookRepository.deleteById(id)
 }
